@@ -32,6 +32,9 @@ public class MainSiemensATSPMS {
     //public static String IntIPStr="172_16_48_158"; // Intersection IP: 2nd Ave and Pike St
     //public static String IntIPStr="172_16_48_164"; // Intersection IP: 2nd Ave and Spring St
 
+	public static String InputFolder="I:\\Dropbox\\WorkAtBerkeley\\Detector_Health_Analysis_Siemens\\Sample_SPM_Data\\2nd_seattle\\seattle_hidef_csv";
+    public static String OutputFolder="I:/Dropbox/WorkAtBerkeley/Detector_Health_Analysis_Siemens/Sample_SPM_Data/data_read";
+				
     public static void main(final String[] args) {
 
         try {
@@ -57,10 +60,7 @@ public class MainSiemensATSPMS {
             taskID =Integer.parseInt(scanner.next());
 
             if(taskID==1){
-                // 1:  Load new Siemens event data To DataBase
-                String InputFolder;
-                InputFolder="I:\\Dropbox\\WorkAtBerkeley\\Detector_Health_Analysis_Siemens\\Sample_SPM_Data\\2nd_seattle\\seattle_hidef_csv";
-                String OutputFolder="I:/Dropbox/WorkAtBerkeley/Detector_Health_Analysis_Siemens/Sample_SPM_Data/data_read";
+                // 1:  Load new Siemens event data To DataBase             
                 loadSiemensEventData.mainSiemensRead(conSiemens,InputFolder, OutputFolder);
             }else{
                 // Get the intersection properties, list of detectors by approach, and intersection name
