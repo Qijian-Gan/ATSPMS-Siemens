@@ -6,18 +6,23 @@ import java.util.*;
 
 public class saveDataToDatabase{
 
+    /**
+     *
+     * @param connection database connection
+     * @param eventDataByIntersections  java class
+     */
     public static void insertSiemensDataToDataBase(Connection connection,loadSiemensEventData.EventDataByIntersection eventDataByIntersections){
         // This function is used to insert Siemens data to database
 
         try {
-            String IntersectionIP=eventDataByIntersections.IntersectionIP;
+            String IntersectionIP=eventDataByIntersections.getIntersectionIP();
             String Header="insert into siemens_database."+IntersectionIP+"_";
-            List<loadSiemensEventData.EventData> eventDataList=eventDataByIntersections.eventDataList;
+            List<loadSiemensEventData.EventData> eventDataList=eventDataByIntersections.getEventDataList();
 
             // First check the number of years inside the data
             HashSet<String> YearHashSet= new HashSet<String>();; // Create the hash set
             for(int i=0;i<eventDataList.size();i++){
-                YearHashSet.add(Integer.toString(eventDataList.get(i).EventDate/10000));
+                YearHashSet.add(Integer.toString(eventDataList.get(i).getEventDate()/10000));
             }
             if(YearHashSet.size()==0){
                 System.out.println("No specific year in the data file!");
@@ -34,12 +39,12 @@ public class saveDataToDatabase{
                 HashSet<String> stringHashSet= new HashSet<String>();; // Create the hash set
                 for (int i=0;i<eventDataList.size();i++) // Loop for each row
                 {
-                    arrayElement=eventDataList.get(i).EventDate + "-" + eventDataList.get(i).EventTime + "-" +
-                            eventDataList.get(i).EventID;
+                    arrayElement=eventDataList.get(i).getEventDate() + "-" + eventDataList.get(i).getEventTime() + "-" +
+                            eventDataList.get(i).getEventID();
                     sql =  Header+ Year + " values (\"" +
-                            eventDataList.get(i).EventDate + "\",\"" + eventDataList.get(i).EventTime + "\",\"" +
-                            eventDataList.get(i).EventTimeStr + "\",\"" +
-                            eventDataList.get(i).EventID + "\",\"" + eventDataList.get(i).EventValue+ "\");";
+                            eventDataList.get(i).getEventDate() + "\",\"" + eventDataList.get(i).getEventTime() + "\",\"" +
+                            eventDataList.get(i).getEventTimeStr() + "\",\"" +
+                            eventDataList.get(i).getEventID() + "\",\"" + eventDataList.get(i).getEventValue()+ "\");";
                     if(stringHashSet.add(arrayElement))// Able to add to the hash set
                     {// Copy the unique item
                         stringSiemens.add(sql);
@@ -54,6 +59,13 @@ public class saveDataToDatabase{
 
     }
 
+    /**
+     *
+     * @param ps SQL Statement
+     * @param string List of SQL strings
+     * @param definedSize predefined size of lines to write into the database
+     * @return true/false
+     */
     public static boolean insertSQLBatch(Statement ps, List<String> string, int definedSize){
         // This function is used to insert SQL batch
         int curSize=0;
@@ -82,6 +94,12 @@ public class saveDataToDatabase{
         }
     }
 
+    /**
+     *
+     * @param ps SQL Statement
+     * @param string List of SQL strings
+     * @return true/false
+     */
     public static boolean insertLineByLine(Statement ps, List<String> string){
         // This function is used to insert line by line
 

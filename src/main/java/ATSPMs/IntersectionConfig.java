@@ -24,17 +24,49 @@ public class IntersectionConfig {
             this.IsExclusiveRight=_IsExclusiveRight;
             this.IsDuplicated=_IsDuplicated;
         }
-        public int DetectorID; // Detector ID
-        public int NumOfLanes; // Number of lanes it covers
+        protected int DetectorID; // Detector ID
+        protected int NumOfLanes; // Number of lanes it covers
         // How far it is from the stopbar. Positive value: upstream of the stopbar; Negative value: downstream of the stopbar
-        public double DistanceFromStopbar;
-        public String Type; // Type of detectors: Advance or vehicle detector(stopbar detector??)
-        public boolean IsExclusiveLeft; // Is it an exclusive left-turn detector?
-        public boolean IsThroughInvolved; // Does it detector the through movement?
-        public boolean IsExclusiveRight; // Is it an exclusive right-turn detector?
+        protected double DistanceFromStopbar;
+        protected String Type; // Type of detectors: Advance or vehicle detector(stopbar detector??)
+        protected boolean IsExclusiveLeft; // Is it an exclusive left-turn detector?
+        protected boolean IsThroughInvolved; // Does it detector the through movement?
+        protected boolean IsExclusiveRight; // Is it an exclusive right-turn detector?
         // There may be multiple detectors on the same lanes to detect the traffic flow
         // Therefore, we may not use all of them for the calculation. We only choose a reliable one, and set others to be duplicated & unused.
-        public boolean IsDuplicated;
+        protected boolean IsDuplicated;
+
+        public int getDetectorID(){
+            return DetectorID;
+        }
+
+        public int getNumOfLanes(){
+            return NumOfLanes;
+        }
+
+        public double getDistanceFromStopbar(){
+            return DistanceFromStopbar;
+        }
+
+        public String getType(){
+            return Type;
+        }
+
+        public boolean isExclusiveLeft() {
+            return IsExclusiveLeft;
+        }
+
+        public boolean isThroughInvolved() {
+            return IsThroughInvolved;
+        }
+
+        public boolean isExclusiveRight() {
+            return IsExclusiveRight;
+        }
+
+        public boolean isDuplicated() {
+            return IsDuplicated;
+        }
     }
 
     public static class DetectorByApproach{
@@ -53,16 +85,56 @@ public class IntersectionConfig {
             this.LeadingPhaseID=_LeadingPhaseID;
             this.detectorConfigList=_detectorConfigList;
         }
-        public String StreetName; // Street name
-        public String ApproachDirection; // EB, WB, SB, NB
-        public int NumOfUpstreamLanes; // Number of upstream lanes
-        public int NumOfDownstreamLanes; // Number of downstream lanes
-        public double SpeedLimit; // Speed limit: used to project the arrival time from advance detector to the stopbar
-        public int PhaseForLeftTurn; // What is the phase for left turn? If "Negative": not such a turn
-        public int PhaseForThroughMovement; // What is the phase for straight through? If "Negative": not such a turn
-        public int PhaseForRightTurn; // What is the phase for right turn? If "Negative": not such a turn
-        public int LeadingPhaseID; // What is the leading(first) phase in a cycle, which is used for the purdue coordination diagram
-        public List<DetectorConfig> detectorConfigList; // A list of detector configurations
+        protected String StreetName; // Street name
+        protected String ApproachDirection; // EB, WB, SB, NB
+        protected int NumOfUpstreamLanes; // Number of upstream lanes
+        protected int NumOfDownstreamLanes; // Number of downstream lanes
+        protected double SpeedLimit; // Speed limit: used to project the arrival time from advance detector to the stopbar
+        protected int PhaseForLeftTurn; // What is the phase for left turn? If "Negative": not such a turn
+        protected int PhaseForThroughMovement; // What is the phase for straight through? If "Negative": not such a turn
+        protected int PhaseForRightTurn; // What is the phase for right turn? If "Negative": not such a turn
+        protected int LeadingPhaseID; // What is the leading(first) phase in a cycle, which is used for the purdue coordination diagram
+        protected List<DetectorConfig> detectorConfigList; // A list of detector configurations
+
+        public String getStreetName() {
+            return StreetName;
+        }
+
+        public String getApproachDirection() {
+            return ApproachDirection;
+        }
+
+        public int getNumOfUpstreamLanes() {
+            return NumOfUpstreamLanes;
+        }
+
+        public int getNumOfDownstreamLanes() {
+            return NumOfDownstreamLanes;
+        }
+
+        public double getSpeedLimit() {
+            return SpeedLimit;
+        }
+
+        public int getPhaseForLeftTurn() {
+            return PhaseForLeftTurn;
+        }
+
+        public int getPhaseForThroughMovement() {
+            return PhaseForThroughMovement;
+        }
+
+        public int getPhaseForRightTurn() {
+            return PhaseForRightTurn;
+        }
+
+        public int getLeadingPhaseID() {
+            return LeadingPhaseID;
+        }
+
+        public List<DetectorConfig> getDetectorConfigList() {
+            return detectorConfigList;
+        }
     }
 
     public static class IntersectionProperty{
@@ -73,10 +145,26 @@ public class IntersectionConfig {
             this.detectorByApproachList=_detectorByApproachList;
             this.PedestrianPhases=_PedestrianPhases;
         }
-        public String IntName;// Name of the intersection
-        public String IntIPStr; // What is the IP address for this intersection
-        public List<DetectorByApproach> detectorByApproachList; // A list of Detector Properties
-        public int [] PedestrianPhases; // What are the pedestrian phases at this intersection.
+        protected String IntName;// Name of the intersection
+        protected String IntIPStr; // What is the IP address for this intersection
+        protected List<DetectorByApproach> detectorByApproachList; // A list of Detector Properties
+        protected int [] PedestrianPhases; // What are the pedestrian phases at this intersection.
+
+        public String getIntName() {
+            return IntName;
+        }
+
+        public String getIntIPStr() {
+            return IntIPStr;
+        }
+
+        public List<DetectorByApproach> getDetectorByApproachList() {
+            return detectorByApproachList;
+        }
+
+        public int[] getPedestrianPhases() {
+            return PedestrianPhases;
+        }
     }
 
 
@@ -320,6 +408,13 @@ public class IntersectionConfig {
     //*********************************************************************************
     //**************************Functions**********************************************
     //*********************************************************************************
+
+    /**
+     *
+     * @param IntIPStr Intersection IP String
+     * @param intersectionPropertyList List of intersection properties (IntersectionProperty)
+     * @return List of detectors by approach (DetectorByApproach)
+     */
     public static List<DetectorByApproach> getDetectorByApproachWithGivenIntIPStr(String IntIPStr,List<IntersectionProperty> intersectionPropertyList){
         // This function is used to get the list of detectors by approach with given the intersection IP address
         // Intersection IP is used as a unique ID for a given intersection here
@@ -334,6 +429,12 @@ public class IntersectionConfig {
         return detectorByApproachList;
     }
 
+    /**
+     *
+     * @param IntIPStr
+     * @param intersectionPropertyList
+     * @return Intersection Name String
+     */
     public static String getIntNameWithGivenIntIPStr(String IntIPStr,List<IntersectionProperty> intersectionPropertyList){
         // This is the function to get an intersection's name with a given IP
         String IntName=null;
@@ -346,6 +447,13 @@ public class IntersectionConfig {
         return IntName;
     }
 
+    /**
+     *
+     * @param detectorConfigList List of detector config (DetectorConfig)
+     * @param Type Detector type
+     * @param TurnMovement Turns: left, through and right
+     * @return Selected list of detector config
+     */
     public static List<DetectorConfig> getListOfDetectorsByGivenType(List<DetectorConfig> detectorConfigList,String Type,String TurnMovement){
         // This function is to select a set of detectors that satisfy the requirement of "Type" and "Turn Movement"
 
@@ -378,6 +486,12 @@ public class IntersectionConfig {
         return detectorConfigList1;
     }
 
+    /**
+     *
+     * @param IntIPStr
+     * @param intersectionPropertyList
+     * @return Array of pedestrian phases
+     */
     public static int[] getPedestrianPhasesWithGivenIntIPStr(String IntIPStr, List<IntersectionProperty>intersectionPropertyList){
         // This function is used to get pedestrian's phases with a given intersection IP
         int [] pedestrianPhases=null;

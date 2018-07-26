@@ -17,8 +17,8 @@ public class MainSiemensATSPMS {
     public static String hostSiemens="jdbc:mysql://localhost:3306/siemens_database"; // Database name for Siemens' data
 
     // Users
-    public static String userName="root";
-    public static String password="!Ganqijian2017";
+    public static String userName="ganqijian";
+    public static String password="!PATH2017ganqijian";
 
     // Settings/Variables
     public static Connection conSiemens; // Database connection
@@ -88,10 +88,10 @@ public class MainSiemensATSPMS {
                     // Draw Yellow and Red Actuations (only for stopbar detectors)
                     for(int i=0;i<detectorByApproachList.size();i++){// Loop for each approach
                         // Get the stree name, direction, and title
-                        String StreetName=detectorByApproachList.get(i).StreetName;
-                        String Direction=detectorByApproachList.get(i).ApproachDirection;
+                        String StreetName=detectorByApproachList.get(i).getStreetName();
+                        String Direction=detectorByApproachList.get(i).getApproachDirection();
                         String Title=IntName+" & "+StreetName+" "+ Direction+ " & "+Date;
-                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).detectorConfigList;
+                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).getDetectorConfigList();
 
                         // Check whether there exist stopbar detectors or not
                         boolean HaveStopbarDetectorLeftTurn=false; // This stands for exclusive left turn
@@ -101,34 +101,34 @@ public class MainSiemensATSPMS {
                         boolean HaveStopbarDetectorThrough=false; // This stands for through movement is involved
                         List<Integer> DetectorListThrough=new ArrayList<Integer>();
                         for(int j=0;j<detectorConfigList.size();j++){
-                            if(detectorConfigList.get(j).Type.equals("VehicleDetector")){
-                                if(detectorConfigList.get(j).IsExclusiveLeft && !detectorConfigList.get(j).IsDuplicated){
+                            if(detectorConfigList.get(j).getType().equals("VehicleDetector")){
+                                if(detectorConfigList.get(j).isExclusiveLeft() && !detectorConfigList.get(j).isDuplicated()){
                                     HaveStopbarDetectorLeftTurn=true;
-                                    DetectorListLeftTurn.add(detectorConfigList.get(j).DetectorID);
+                                    DetectorListLeftTurn.add(detectorConfigList.get(j).getDetectorID());
                                 }
-                                if(detectorConfigList.get(j).IsThroughInvolved && !detectorConfigList.get(j).IsDuplicated){
+                                if(detectorConfigList.get(j).isThroughInvolved() && !detectorConfigList.get(j).isDuplicated()){
                                     HaveStopbarDetectorThrough=true;
-                                    DetectorListThrough.add(detectorConfigList.get(j).DetectorID);
+                                    DetectorListThrough.add(detectorConfigList.get(j).getDetectorID());
                                 }
-                                if(detectorConfigList.get(j).IsExclusiveRight && !detectorConfigList.get(j).IsDuplicated){
+                                if(detectorConfigList.get(j).isExclusiveRight() && !detectorConfigList.get(j).isDuplicated()){
                                     HaveStopbardetectorRightTurn=true;
-                                    DetectorListRightTurn.add(detectorConfigList.get(j).DetectorID);
+                                    DetectorListRightTurn.add(detectorConfigList.get(j).getDetectorID());
                                 }
                             }
                         }
-                        if(HaveStopbarDetectorLeftTurn && detectorByApproachList.get(i).PhaseForLeftTurn>0){
+                        if(HaveStopbarDetectorLeftTurn && detectorByApproachList.get(i).getPhaseForLeftTurn()>0){
                             // Have detectors and the corresponding phase for left turns
-                            calculateTrafficSignalParameters.drawYellowAndRedActuations(DetectorListLeftTurn,detectorByApproachList.get(i).PhaseForLeftTurn,
+                            calculateTrafficSignalParameters.drawYellowAndRedActuations(DetectorListLeftTurn,detectorByApproachList.get(i).getPhaseForLeftTurn(),
                                     "Left Turn", Date, FromTime, ToTime, IntIPStr, conSiemens, "Yellow and Red Actuation at "+Title, Interval);
                         }
-                        if(HaveStopbarDetectorThrough && detectorByApproachList.get(i).PhaseForThroughMovement>0){
+                        if(HaveStopbarDetectorThrough && detectorByApproachList.get(i).getPhaseForThroughMovement()>0){
                             // Have detectors and the corresponding phase for through movements
-                            calculateTrafficSignalParameters.drawYellowAndRedActuations(DetectorListThrough,detectorByApproachList.get(i).PhaseForThroughMovement,
+                            calculateTrafficSignalParameters.drawYellowAndRedActuations(DetectorListThrough,detectorByApproachList.get(i).getPhaseForThroughMovement(),
                                     "Through", Date, FromTime, ToTime, IntIPStr, conSiemens, "Yellow and Red Actuation at "+Title, Interval);
                         }
-                        if(HaveStopbardetectorRightTurn && detectorByApproachList.get(i).PhaseForRightTurn>0){
+                        if(HaveStopbardetectorRightTurn && detectorByApproachList.get(i).getPhaseForRightTurn()>0){
                             // Have detectors and the corresponding phase for right turns
-                            calculateTrafficSignalParameters.drawYellowAndRedActuations(DetectorListRightTurn,detectorByApproachList.get(i).PhaseForRightTurn,
+                            calculateTrafficSignalParameters.drawYellowAndRedActuations(DetectorListRightTurn,detectorByApproachList.get(i).getPhaseForRightTurn(),
                                     "Right Turn", Date, FromTime, ToTime, IntIPStr, conSiemens, "Yellow and Red Actuation at "+Title, Interval);
                         }
                     }
@@ -136,10 +136,10 @@ public class MainSiemensATSPMS {
                     // Draw Purdue Split Failure
                     for(int i=0;i<detectorByApproachList.size();i++){// Loop for each approach
                         // Get the stree name, direction, and title
-                        String StreetName=detectorByApproachList.get(i).StreetName;
-                        String Direction=detectorByApproachList.get(i).ApproachDirection;
+                        String StreetName=detectorByApproachList.get(i).getStreetName();
+                        String Direction=detectorByApproachList.get(i).getApproachDirection();
                         String Title=IntName+" & "+StreetName+" "+ Direction+ " & "+Date;
-                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).detectorConfigList;
+                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).getDetectorConfigList();
 
                         // Check whether there exist stopbar detectors or not
                         boolean HaveStopbarDetectorLeftTurn=false; // This stands for exclusive left turn
@@ -149,34 +149,34 @@ public class MainSiemensATSPMS {
                         boolean HaveStopbarDetectorThrough=false; // This stands for through movement is involved
                         List<Integer> DetectorListThrough=new ArrayList<Integer>();
                         for(int j=0;j<detectorConfigList.size();j++){
-                            if(detectorConfigList.get(j).Type.equals("VehicleDetector")){
-                                if(detectorConfigList.get(j).IsExclusiveLeft && !detectorConfigList.get(j).IsDuplicated){
+                            if(detectorConfigList.get(j).getType().equals("VehicleDetector")){
+                                if(detectorConfigList.get(j).isExclusiveLeft() && !detectorConfigList.get(j).isDuplicated()){
                                     HaveStopbarDetectorLeftTurn=true;
-                                    DetectorListLeftTurn.add(detectorConfigList.get(j).DetectorID);
+                                    DetectorListLeftTurn.add(detectorConfigList.get(j).getDetectorID());
                                 }
-                                if(detectorConfigList.get(j).IsThroughInvolved && !detectorConfigList.get(j).IsDuplicated){
+                                if(detectorConfigList.get(j).isThroughInvolved() && !detectorConfigList.get(j).isDuplicated()){
                                     HaveStopbarDetectorThrough=true;
-                                    DetectorListThrough.add(detectorConfigList.get(j).DetectorID);
+                                    DetectorListThrough.add(detectorConfigList.get(j).getDetectorID());
                                 }
-                                if(detectorConfigList.get(j).IsExclusiveRight && !detectorConfigList.get(j).IsDuplicated){
+                                if(detectorConfigList.get(j).isExclusiveRight() && !detectorConfigList.get(j).isDuplicated()){
                                     HaveStopbardetectorRightTurn=true;
-                                    DetectorListRightTurn.add(detectorConfigList.get(j).DetectorID);
+                                    DetectorListRightTurn.add(detectorConfigList.get(j).getDetectorID());
                                 }
                             }
                         }
-                        if(HaveStopbarDetectorLeftTurn && detectorByApproachList.get(i).PhaseForLeftTurn>0){
+                        if(HaveStopbarDetectorLeftTurn && detectorByApproachList.get(i).getPhaseForLeftTurn()>0){
                             // Have detectors and the corresponding phase for left turns
-                            calculateTrafficSignalParameters.drawPurdueSplitFailure(DetectorListLeftTurn,detectorByApproachList.get(i).PhaseForLeftTurn,
+                            calculateTrafficSignalParameters.drawPurdueSplitFailure(DetectorListLeftTurn,detectorByApproachList.get(i).getPhaseForLeftTurn(),
                                     "Left Turn", Date, FromTime, ToTime, IntIPStr, conSiemens, "Purdue Split Failure at "+Title, Interval);
                         }
-                        if(HaveStopbarDetectorThrough && detectorByApproachList.get(i).PhaseForThroughMovement>0){
+                        if(HaveStopbarDetectorThrough && detectorByApproachList.get(i).getPhaseForThroughMovement()>0){
                             // Have detectors and the corresponding phase for through movements
-                            calculateTrafficSignalParameters.drawPurdueSplitFailure(DetectorListThrough,detectorByApproachList.get(i).PhaseForThroughMovement,
+                            calculateTrafficSignalParameters.drawPurdueSplitFailure(DetectorListThrough,detectorByApproachList.get(i).getPhaseForThroughMovement(),
                                     "Through", Date, FromTime, ToTime, IntIPStr, conSiemens, "Purdue Split Failure at "+Title, Interval);
                         }
-                        if(HaveStopbardetectorRightTurn && detectorByApproachList.get(i).PhaseForRightTurn>0){
+                        if(HaveStopbardetectorRightTurn && detectorByApproachList.get(i).getPhaseForRightTurn()>0){
                             // Have detectors and the corresponding phase for right turns
-                            calculateTrafficSignalParameters.drawPurdueSplitFailure(DetectorListRightTurn,detectorByApproachList.get(i).PhaseForRightTurn,
+                            calculateTrafficSignalParameters.drawPurdueSplitFailure(DetectorListRightTurn,detectorByApproachList.get(i).getPhaseForRightTurn(),
                                     "Right Turn", Date, FromTime, ToTime, IntIPStr, conSiemens, "Purdue Split Failure at "+Title, Interval);
                         }
                     }
@@ -185,19 +185,19 @@ public class MainSiemensATSPMS {
                     for(int i=0;i<detectorByApproachList.size();i++){
                         // Loop for each approach
                         // Get the stree name, direction, and title
-                        String StreetName=detectorByApproachList.get(i).StreetName;
-                        String Direction=detectorByApproachList.get(i).ApproachDirection;
+                        String StreetName=detectorByApproachList.get(i).getStreetName();
+                        String Direction=detectorByApproachList.get(i).getApproachDirection();
                         String Title="Purdue Coordination Diagram at "+IntName+" & "+StreetName+" "+ Direction+ " & "+Date;
-                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).detectorConfigList;
+                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).getDetectorConfigList();
                         // Check whether there exist advance detectors or not
                         boolean HaveAdvanceDetector=false;
                         for(int j=0;j<detectorConfigList.size();j++){
-                            if(detectorConfigList.get(j).Type.equals("AdvanceDetector")&&
-                                    detectorConfigList.get(j).DistanceFromStopbar>0){
+                            if(detectorConfigList.get(j).getType().equals("AdvanceDetector")&&
+                                    detectorConfigList.get(j).getDistanceFromStopbar()>0){
                                 HaveAdvanceDetector=true;
                             }
                         }
-                        if(HaveAdvanceDetector && detectorByApproachList.get(i).PhaseForThroughMovement>0){
+                        if(HaveAdvanceDetector && detectorByApproachList.get(i).getPhaseForThroughMovement()>0){
                             // Have advanced detector and the corresponding phase at a given approach
                             // Draw the purdue coordination diagram
                             calculateTrafficSignalParameters.drawPurdueCoordinationDiagramByApproach(detectorByApproachList.get(i)
@@ -210,10 +210,10 @@ public class MainSiemensATSPMS {
                             getDetectorActuationEventsForGivenDateAndTimePeriod(Date,FromTime,ToTime,IntIPStr,conSiemens);
                     for(int i=0;i<detectorByApproachList.size();i++){
                         // Loop for each approach
-                        String StreetName=detectorByApproachList.get(i).StreetName;
-                        String Direction=detectorByApproachList.get(i).ApproachDirection;
+                        String StreetName=detectorByApproachList.get(i).getStreetName();
+                        String Direction=detectorByApproachList.get(i).getApproachDirection();
                         String Title=IntName+" & "+StreetName+" "+ Direction+ " & "+Date;
-                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).detectorConfigList;
+                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).getDetectorConfigList();
                         calculateTrafficSignalParameters.drawApproachFlowAndOccupancy(detectorConfigList,Interval,Title,actuationEventByDetectorList);
                     }
                 }else if(taskID==8){
@@ -222,10 +222,10 @@ public class MainSiemensATSPMS {
                             getDetectorActuationEventsForGivenDateAndTimePeriod(Date,FromTime,ToTime,IntIPStr,conSiemens);
                     for(int i=0;i<detectorByApproachList.size();i++){
                         // Loop for each approach
-                        String StreetName=detectorByApproachList.get(i).StreetName;
-                        String Direction=detectorByApproachList.get(i).ApproachDirection;
+                        String StreetName=detectorByApproachList.get(i).getStreetName();
+                        String Direction=detectorByApproachList.get(i).getApproachDirection();
                         String Title=IntName+" & "+StreetName+" "+ Direction+ " & "+Date;
-                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).detectorConfigList;
+                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).getDetectorConfigList();
                         calculateTrafficSignalParameters.drawTurningMovementCountByApproach(detectorConfigList,Interval
                                 , "Turning Count at "+Title+" : "+"Left Turn",actuationEventByDetectorList,"LeftTurn");
                     }
@@ -244,19 +244,19 @@ public class MainSiemensATSPMS {
                     // Draw arrival on red
                     for(int i=0;i<detectorByApproachList.size();i++){
                         // Loop for each approach
-                        String StreetName=detectorByApproachList.get(i).StreetName;
-                        String Direction=detectorByApproachList.get(i).ApproachDirection;
+                        String StreetName=detectorByApproachList.get(i).getStreetName();
+                        String Direction=detectorByApproachList.get(i).getApproachDirection();
                         String Title=IntName+" & "+StreetName+" "+ Direction+ " & "+Date;
-                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).detectorConfigList;
+                        List<DetectorConfig> detectorConfigList=detectorByApproachList.get(i).getDetectorConfigList();
 
                         boolean HaveAdvanceDetector=false;
                         for(int j=0;j<detectorConfigList.size();j++){
-                            if(detectorConfigList.get(j).Type.equals("AdvanceDetector")&&
-                                    detectorConfigList.get(j).DistanceFromStopbar>0){
+                            if(detectorConfigList.get(j).getType().equals("AdvanceDetector")&&
+                                    detectorConfigList.get(j).getDistanceFromStopbar()>0){
                                 HaveAdvanceDetector=true;
                             }
                         }
-                        if(HaveAdvanceDetector && detectorByApproachList.get(i).PhaseForThroughMovement>0){
+                        if(HaveAdvanceDetector && detectorByApproachList.get(i).getPhaseForThroughMovement()>0){
                             // Have advanced detector and the corresponding phase
                             calculateTrafficSignalParameters.drawArrivalOnRedByApproachAndPhase(detectorByApproachList.get(i)
                                     , Date, FromTime, ToTime, IntIPStr, conSiemens, "Arrival On Red at "+Title, Interval);

@@ -42,11 +42,16 @@ public class calculateTrafficSignalParameters {
             this.eventTimes=_eventTimes;
             this.eventValues=_eventValues;
         }
-        public List<Double> eventTimes;
-        public List<Integer> eventIDs;
-        public List<Integer> eventValues;
+        protected List<Double> eventTimes;
+        protected List<Integer> eventIDs;
+        protected List<Integer> eventValues;
     }
 
+    /**
+     *
+     * @param resultSet ResultSet
+     * @return EventProperties
+     */
     public static EventProperties getEventPropertiesFromResultSet(ResultSet resultSet){
         // This function is to get Event ID, Time and Value From ResultSet
         List<Double> eventTimes=new ArrayList<Double>();
@@ -84,14 +89,23 @@ public class calculateTrafficSignalParameters {
             this.Offset=_Offset;
             this.GreenSplits=_GreenSplits;
         }
-        public int PlanID;
-        public double StartTime;
-        public double EndTime;
-        public double CycleLength;
-        public double Offset;
-        public double [] GreenSplits;// Green splits for the phases
+        protected int PlanID;
+        protected double StartTime;
+        protected double EndTime;
+        protected double CycleLength;
+        protected double Offset;
+        protected double [] GreenSplits;// Green splits for the phases
     }
 
+    /**
+     *
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return List of PlanProperty
+     */
     public static List<PlanProperty> getPhasePlanSequenceForGivenDateAndTimePeriod(int Date, double FromTime, double ToTime,
                                                                      String IntIPStr, Connection con){
         // This function is used to get the plan sequence for a given phase on a given date at given time periods
@@ -115,6 +129,11 @@ public class calculateTrafficSignalParameters {
         return newPlanPropertyList;
     }
 
+    /**
+     *
+     * @param planPropertyList List of PlanProperty
+     * @return Unique plan sequence (List<PlanProperty>)
+     */
     public static List<PlanProperty> findUniquePlanSequence(List<PlanProperty> planPropertyList){
         // This function is used to find unique plan sequence & get rid of phase properties with incomplete information
 
@@ -176,6 +195,13 @@ public class calculateTrafficSignalParameters {
         return newPlanPropertyList;
     }
 
+    /**
+     *
+     * @param eventProperties EventProperties
+     * @param FromTime
+     * @param ToTime
+     * @return List of PlanProperty
+     */
     public static List<PlanProperty> getPlanProperties(EventProperties eventProperties, double FromTime,
                                                         double ToTime){
         // This function is used to get phase properties
@@ -221,6 +247,13 @@ public class calculateTrafficSignalParameters {
         return planPropertyList;
     }
 
+    /**
+     *
+     * @param planPropertyList List of PlanProperty
+     * @param PlanID Plan ID
+     * @param PhaseID Phase ID
+     * @return XY series
+     */
     public static XYSeries getXTimeYMeasurePlannedRev(List<PlanProperty> planPropertyList,int PlanID, int PhaseID){
         // This function is used to get (planned) measurements (Time & Duration/Green Time) for given plan ID and Phase ID
 
@@ -247,6 +280,14 @@ public class calculateTrafficSignalParameters {
         return xySeries;
     }
 
+    /**
+     *
+     * @param TimeInSecond Time (seconds)
+     * @param YMeasure Y Measures
+     * @param planPropertyList List of PlanProperty
+     * @param PlanID Plan ID
+     * @return XY series
+     */
     public static XYSeries getXTimeYMeasureByTimingStatusRev(double[] TimeInSecond, double [] YMeasure, List<PlanProperty>
             planPropertyList, int PlanID){
         // This function is used to get (actual) x-y measures (Time & Duration/Green Time) with given a given plan ID
@@ -306,23 +347,23 @@ public class calculateTrafficSignalParameters {
             this.IsMaxOut=_IsMaxOut;
             this.IsForceOff=_IsForceOff;
         }
-        public double GreenStartTime;
-        public double GreenEndTime;
-        public double GreenDuration;
-        public double MinGreenDuration;
-        public boolean IsMinGreenComplete=false;
+        protected double GreenStartTime;
+        protected double GreenEndTime;
+        protected double GreenDuration;
+        protected double MinGreenDuration;
+        protected boolean IsMinGreenComplete=false;
 
-        public double YellowStartTime;
-        public double YellowEndTime;
-        public double YellowDuration;
+        protected double YellowStartTime;
+        protected double YellowEndTime;
+        protected double YellowDuration;
 
-        public double AllRedStartTime;
-        public double AllRedEndTime;
-        public double AllRedDuration;
+        protected double AllRedStartTime;
+        protected double AllRedEndTime;
+        protected double AllRedDuration;
 
-        public boolean IsGapOut=false;
-        public boolean IsMaxOut=false;
-        public boolean IsForceOff=false;
+        protected boolean IsGapOut=false;
+        protected boolean IsMaxOut=false;
+        protected boolean IsForceOff=false;
     }
 
     public static class PhasePropertyByID{
@@ -330,8 +371,8 @@ public class calculateTrafficSignalParameters {
             this.PhaseID=_PhaseID;
             this.phasePropertyList=_phasePropertyList;
         }
-        public int PhaseID;
-        public List<PhaseProperty> phasePropertyList;
+        protected int PhaseID;
+        protected List<PhaseProperty> phasePropertyList;
     }
 
     public static class YellowTimeProperty{
@@ -341,9 +382,9 @@ public class calculateTrafficSignalParameters {
             this.YellowEndTime=_YellowEndTime;
             this.YellowDuration=_YellowDuration;
         }
-        public double YellowStartTime;
-        public double YellowEndTime;
-        public double YellowDuration;
+        protected double YellowStartTime;
+        protected double YellowEndTime;
+        protected double YellowDuration;
     }
 
     public static class RedTimeProperty{
@@ -353,9 +394,9 @@ public class calculateTrafficSignalParameters {
             this.AllRedEndTime=_AllRedEndTime;
             this.AllRedDuration=_AllRedDuration;
         }
-        public double AllRedStartTime;
-        public double AllRedEndTime;
-        public double AllRedDuration;
+        protected double AllRedStartTime;
+        protected double AllRedEndTime;
+        protected double AllRedDuration;
     }
 
     public static class YellowAndAllRedPropertyByID{
@@ -366,11 +407,20 @@ public class calculateTrafficSignalParameters {
             this.yellowTimePropertyList=_yellowTimePropertyList;
             this.redTimePropertyList=_redTimePropertyList;
         }
-        public int PhaseID;
-        public List<YellowTimeProperty> yellowTimePropertyList;
-        public List<RedTimeProperty> redTimePropertyList;
+        protected int PhaseID;
+        protected List<YellowTimeProperty> yellowTimePropertyList;
+        protected List<RedTimeProperty> redTimePropertyList;
     }
 
+    /**
+     *
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return List of PhasePropertyByID
+     */
     public static List<PhasePropertyByID> getActualPhaseInfForGivenDateAndTimePeriod(int Date, double FromTime, double ToTime,
                                                                   String IntIPStr, Connection con){
         //This function is used to get actual phase information for given date and time period
@@ -395,6 +445,16 @@ public class calculateTrafficSignalParameters {
         return actualPhasePropertyList;
     }
 
+    /**
+     *
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param PhaseID Phase ID
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return PhasePropertyByID
+     */
     public static PhasePropertyByID getActualPhaseInfForGivenPhaseDateAndTimePeriod(int Date, double FromTime
             , double ToTime,int PhaseID,String IntIPStr, Connection con){
         //This function is used to get actual phase information for given Phase ID, date and time period
@@ -415,6 +475,16 @@ public class calculateTrafficSignalParameters {
         return phasePropertyByID;
     }
 
+    /**
+     *
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param PhaseID Phase ID
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return YellowAndAllRedPropertyByID
+     */
     public static YellowAndAllRedPropertyByID getActualYellowAndRedInfForGivenPhaseDateAndTimePeriod(int Date, double FromTime
             , double ToTime,int PhaseID,String IntIPStr, Connection con){
         //This function is used to get actual yellow and red information for given Phase ID, date and time period
@@ -435,6 +505,12 @@ public class calculateTrafficSignalParameters {
         return yellowAndAllRedPropertyByID;
     }
 
+    /**
+     *
+     * @param actuationEventByDetectorList List of ActuationEventByDetector
+     * @param yellowTimePropertyList List of YellowTimeProperty
+     * @return List of double[]
+     */
     public static List<double[]> adjustVehicleOffsetsAccordingToYellowTimes(List<ActuationEventByDetector> actuationEventByDetectorList
             , List<YellowTimeProperty> yellowTimePropertyList){
         // This is used to adjust the vehicle offsets according to the yellow times
@@ -474,6 +550,12 @@ public class calculateTrafficSignalParameters {
         return VehicleOffSet;
     }
 
+    /**
+     *
+     * @param redTimePropertyList List of RedTimeProperty
+     * @param yellowTimePropertyList List of YellowTimeProperty
+     * @return List of double[]
+     */
     public static List<double[]> adjustAllRedOffsetsAccordingToYellowTimes(List<RedTimeProperty> redTimePropertyList,
              List<YellowTimeProperty>yellowTimePropertyList){
         // This is the function used to adjust the offsets for all red times according to the yellow times
@@ -512,6 +594,11 @@ public class calculateTrafficSignalParameters {
         return AllRedOffSets;
     }
 
+    /**
+     *
+     * @param eventProperties EventProperties
+     * @return List of Integer
+     */
     public static List<Integer> getListOfPhaseIDsFromEventProperties(EventProperties eventProperties){
         // This function is used to get the list of phase IDs from event properties (actual phase events)
         List<Integer> PhaseIDList=new ArrayList<Integer>();
@@ -530,6 +617,12 @@ public class calculateTrafficSignalParameters {
         return PhaseIDList;
     }
 
+    /**
+     *
+     * @param eventProperties EventProperties
+     * @param phaseID Phase ID
+     * @return YellowAndAllRedPropertyByID
+     */
     public static YellowAndAllRedPropertyByID getYellowAndAllRedDurations(EventProperties eventProperties, int phaseID){
         // This function is used to get yellow and all red times
 
@@ -596,6 +689,12 @@ public class calculateTrafficSignalParameters {
         return yellowAndAllRed;
     }
 
+    /**
+     *
+     * @param eventProperties EventProperties
+     * @param phaseID Phase ID
+     * @return PhasePropertyByID
+     */
     public static PhasePropertyByID getActualPhaseProperties(EventProperties eventProperties, int phaseID){
         // This function is used to get actual phase properties
 
@@ -689,6 +788,11 @@ public class calculateTrafficSignalParameters {
         return phasePropertyByID;
     }
 
+    /**
+     *
+     * @param planPropertyList List of PlanProperty
+     * @return List of Integer
+     */
     public static List<Integer> findUniquePlanIDs(List<PlanProperty> planPropertyList){
         // This function is used to find Unique plan IDs
         List<Integer> UniquePlanIDs=new ArrayList<Integer>();
@@ -712,9 +816,9 @@ public class calculateTrafficSignalParameters {
             this.OffTime=_OffTime;
             this.OnDuration=_OnDuration;
         }
-        public double OnTime;
-        public double OffTime;
-        public double OnDuration;
+        protected double OnTime;
+        protected double OffTime;
+        protected double OnDuration;
     }
 
     public static class ActuationEventByDetector{
@@ -725,10 +829,10 @@ public class calculateTrafficSignalParameters {
             this.EndTime=_EndTime;
             this.actuationEventList=_actuationEventList;
         }
-        public int DetectorID;
-        public double StartTime;
-        public double EndTime;
-        public List<ActuationEvent> actuationEventList;
+        protected int DetectorID;
+        protected double StartTime;
+        protected double EndTime;
+        protected List<ActuationEvent> actuationEventList;
     }
 
     public static class FlowOccByDetector{
@@ -741,11 +845,11 @@ public class calculateTrafficSignalParameters {
          this.AggregatedInterval=_AggregatedInterval;
          this.TimeFlowOcc=_TimeFlowOcc;
         }
-        public int DetectorID;
-        public double StartTime;
-        public double EndTime;
-        public double AggregatedInterval;
-        public double[][] TimeFlowOcc; // Row: (EndTime-StartTime)/AggregatedInterval
+        protected int DetectorID;
+        protected double StartTime;
+        protected double EndTime;
+        protected double AggregatedInterval;
+        protected double[][] TimeFlowOcc; // Row: (EndTime-StartTime)/AggregatedInterval
     }
 
     public static class ChangeToGreenYellowRedTimeSeries{
@@ -757,12 +861,21 @@ public class calculateTrafficSignalParameters {
             this.ChangeToYellow=_ChangeToYellow;
             this.ChangeToRed=_ChangeToRed;
         }
-        public List<Double> ReferenceTime;
-        public List<double []> ChangeToGreen;
-        public List<double []> ChangeToYellow;
-        public List<double []> ChangeToRed;
+        protected List<Double> ReferenceTime;
+        protected List<double []> ChangeToGreen;
+        protected List<double []> ChangeToYellow;
+        protected List<double []> ChangeToRed;
     }
 
+    /**
+     *
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return List of ActuationEventByDetector
+     */
     public static List<ActuationEventByDetector> getDetectorActuationEventsForGivenDateAndTimePeriod(int Date
             , double FromTime, double ToTime,String IntIPStr, Connection con){
         // This function is used to get detector actuation events for given date and time period
@@ -790,6 +903,16 @@ public class calculateTrafficSignalParameters {
         return actuationEventByDetectorList;
     }
 
+    /**
+     *
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @param DetectorList Detector list
+     * @return List of ActuationEventByDetector
+     */
     public static List<ActuationEventByDetector> getActuationEventsForGivenDateAndTimePeriodAndDetectorList(int Date
             , double FromTime, double ToTime,String IntIPStr, Connection con,List<Integer> DetectorList){
         // This function is used to get actuation events for given date and time period and detector list
@@ -826,6 +949,14 @@ public class calculateTrafficSignalParameters {
         return actuationEventByDetectorList;
     }
 
+    /**
+     *
+     * @param eventProperties EventProperties
+     * @param DetectorID Detector ID
+     * @param StartTime
+     * @param EndTime
+     * @return ActuationEventByDetector
+     */
     public static ActuationEventByDetector getActuationEventByDetector(EventProperties eventProperties, int DetectorID
             ,double StartTime,double EndTime){
         // This function is used to get actuation events for a given detector
@@ -879,6 +1010,11 @@ public class calculateTrafficSignalParameters {
         return actuationEventByDetector;
     }
 
+    /**
+     *
+     * @param eventProperties EventProperties
+     * @return List of Integer
+     */
     public static List<Integer> getUniqueDetectorsFromEventProperties(EventProperties eventProperties){
         // This function is used to get unique detectors within the event properties
         List<Integer> uniqueDetectors=new ArrayList<Integer>();
@@ -892,6 +1028,13 @@ public class calculateTrafficSignalParameters {
         return uniqueDetectors;
     }
 
+    /**
+     *
+     * @param actuationEventByDetectorList List of ActuationEventByDetector
+     * @param Interval Time interval (seconds)
+     * @param NumOfLanes Number of lanes
+     * @return List of FlowOccByDetector
+     */
     public static List<FlowOccByDetector> getFlowOccForGivenDateAndTimePeriodAndInterval(
             List<ActuationEventByDetector> actuationEventByDetectorList,double Interval,List<Double> NumOfLanes){
         // This function is used to get the flow-occ for a given date and time period and interval
@@ -964,6 +1107,16 @@ public class calculateTrafficSignalParameters {
         return flowOccByDetectorList;
     }
 
+    /**
+     *
+     * @param phaseOnOffEventsList List of PhaseOnOffEvents
+     * @param actuationEventByDetectorList List of ActuationEventByDetector
+     * @param FromTime
+     * @param ToTime
+     * @param Interval Time interval (seconds)
+     * @param MaxLatency Projected time from advance detector to stopbar(seconds)
+     * @return arrivalOnRedFlow double[][]
+     */
     public static double [][] calulateArrivalOnRedFlowForGivenPhaseAndTimePeriod(List<PhaseOnOffEvents> phaseOnOffEventsList,
             List<ActuationEventByDetector> actuationEventByDetectorList,double FromTime, double ToTime, double Interval,double MaxLatency){
         // This function is used to calculate the metric of Arrival On Red
@@ -1005,6 +1158,13 @@ public class calculateTrafficSignalParameters {
         return arrivalOnRedFlow;
     }
 
+    /**
+     *
+     * @param actuationEvent ActuationEvent
+     * @param phaseOnOffEventsList List of PhaseOnOffEvents
+     * @param MaxLatency Projected time from advance detector to stopbar(seconds)
+     * @return Status true/false
+     */
     public static boolean CheckWhetherArrivalOnRed(ActuationEvent actuationEvent,List<PhaseOnOffEvents> phaseOnOffEventsList,double MaxLatency){
         // Check whether an actuation event (an arrival) is during the red time
 
@@ -1022,6 +1182,12 @@ public class calculateTrafficSignalParameters {
         return Status;
     }
 
+    /**
+     *
+     * @param curPhaseProperty Current PhasePropertyByID
+     * @param prePhaseProperty Previous PhasePropertyByID
+     * @return ChangeToGreenYellowRedTimeSeries
+     */
     public static ChangeToGreenYellowRedTimeSeries GetTimeSeriesChangeToGreenYellowRed(PhasePropertyByID curPhaseProperty
             ,PhasePropertyByID prePhaseProperty){
         // This function is used to get time series that change to green, yellow, and red
@@ -1055,6 +1221,12 @@ public class calculateTrafficSignalParameters {
         return changeToGreenYellowRedTimeSeries;
     }
 
+    /**
+     *
+     * @param TimeToGreen Reference time (Time to Green)
+     * @param prePhaseProperty Previous PhasePropertyByID
+     * @return Updated ReferenceTime
+     */
     public static double CheckPhaseOffset(double TimeToGreen,PhasePropertyByID prePhaseProperty){
         // This function is used to get the phase offset (reference point from the beginning of the phase)
 
@@ -1070,6 +1242,12 @@ public class calculateTrafficSignalParameters {
         return ReferenceTime;
     }
 
+    /**
+     *
+     * @param actuationEventByDetectorList List of ActuationEventByDetector
+     * @param ReferenceTime Reference Time
+     * @return DetectorEventOffset (List of double[])
+     */
     public static List<double []> CheckDetectorEventOffset(List<ActuationEventByDetector> actuationEventByDetectorList,List<Double> ReferenceTime){
         // This function is used to check detector event offsets
 
@@ -1098,8 +1276,8 @@ public class calculateTrafficSignalParameters {
             this.OnTime=_OnTime;
             this.OffTime=_OffTime;
         }
-        public double OnTime;
-        public double OffTime;
+        protected double OnTime;
+        protected double OffTime;
     }
 
     public static class PhaseOnOffEvents{
@@ -1108,8 +1286,8 @@ public class calculateTrafficSignalParameters {
             this.OnTime=_OnTime;
             this.OffTime=_OffTime;
         }
-        public double OnTime;
-        public double OffTime;
+        protected double OnTime;
+        protected double OffTime;
     }
 
     public static class PedestrianCallByPhase{
@@ -1119,9 +1297,9 @@ public class calculateTrafficSignalParameters {
             this.pedestrianCallList=_pedestrianCallList;
             this.phaseOnOffEventsList=_phaseOnOffEventsList;
         }
-        public int PhaseID;
-        public List<PedestrianCall> pedestrianCallList; // Ordered by time
-        public List<PhaseOnOffEvents> phaseOnOffEventsList; // Ordered by Time
+        protected int PhaseID;
+        protected List<PedestrianCall> pedestrianCallList; // Ordered by time
+        protected List<PhaseOnOffEvents> phaseOnOffEventsList; // Ordered by Time
     }
 
     public static class WaitingTimeForPedestrianCall{
@@ -1132,10 +1310,10 @@ public class calculateTrafficSignalParameters {
             this.PhaseOffTime=_PhaseOffTime;
             this.WaitingTime=_WaitingTime;
         }
-        public double PedOnTime; // Pedestrian arrival time
-        public double PhaseOnTime; // Next Phase start time
-        public double PhaseOffTime; // Next phase end time
-        public double WaitingTime; //Pedestrian waiting time
+        protected double PedOnTime; // Pedestrian arrival time
+        protected double PhaseOnTime; // Next Phase start time
+        protected double PhaseOffTime; // Next phase end time
+        protected double WaitingTime; //Pedestrian waiting time
     }
 
     public static class TotalPedCallAndAvgWaitingTimeByInterval{
@@ -1148,13 +1326,23 @@ public class calculateTrafficSignalParameters {
             this.MaxWaitingTime=_MaxWaitingTime;
             this.TotalPedCalls=_TotalPedCalls;
         }
-        public double [] StartTime;
-        public double [] EndTime;
-        public double [] AvgWaitingTime; // Series of avg waiting times
-        public double [] MaxWaitingTime; // Series of max waiting times
-        public double [] TotalPedCalls; // Series of total pedestrian calls
+        protected double [] StartTime;
+        protected double [] EndTime;
+        protected double [] AvgWaitingTime; // Series of avg waiting times
+        protected double [] MaxWaitingTime; // Series of max waiting times
+        protected double [] TotalPedCalls; // Series of total pedestrian calls
     }
 
+    /**
+     *
+     * @param PhaseID Phase ID
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return List<PedestrianCall> pedestrianCallList
+     */
     public static List<PedestrianCall> getPedDetectorEventsByPhaseForGivenDateAndTimePeriod(int PhaseID,int Date
             , double FromTime, double ToTime,String IntIPStr, Connection con){
         // This function is used to get pedestrian detector events by phase ID for given date and time period
@@ -1193,6 +1381,16 @@ public class calculateTrafficSignalParameters {
         return pedestrianCallList;
     }
 
+    /**
+     *
+     * @param PhaseID Phase ID
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return List<PhaseOnOffEvents> phaseOnOffEventsList
+     */
     public static List<PhaseOnOffEvents> getPhaseOnOffEventsForGivenDateAndTimePeriod(int PhaseID,int Date
             , double FromTime, double ToTime,String IntIPStr, Connection con){
         // This function is used to get phase on/off events for given date and time period
@@ -1231,6 +1429,16 @@ public class calculateTrafficSignalParameters {
         return phaseOnOffEventsList;
     }
 
+    /**
+     *
+     * @param PhaseID Phase ID
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @return PedestrianCallByPhase pedestrianCallByPhase
+     */
     public static PedestrianCallByPhase getPedestrianCallByPhase(int PhaseID,int Date
             , double FromTime, double ToTime,String IntIPStr, Connection con){
         // This function is used to get pedestrian calls by phase
@@ -1245,6 +1453,11 @@ public class calculateTrafficSignalParameters {
         return pedestrianCallByPhase;
     }
 
+    /**
+     *
+     * @param pedestrianCallByPhase PedestrianCallByPhase
+     * @return List<WaitingTimeForPedestrianCall> waitingTimeForPedestrianCallList
+     */
     public static List<WaitingTimeForPedestrianCall> calculateWaitingTimeForPedestrianCalls(PedestrianCallByPhase pedestrianCallByPhase){
         // This function is used to calculate the waiting times for pedestrian calls
         List<WaitingTimeForPedestrianCall> waitingTimeForPedestrianCallList=new ArrayList<WaitingTimeForPedestrianCall>();
@@ -1270,6 +1483,14 @@ public class calculateTrafficSignalParameters {
         return waitingTimeForPedestrianCallList;
     }
 
+    /**
+     *
+     * @param waitingTimeForPedestrianCallList List of WaitingTimeForPedestrianCall
+     * @param FromTime
+     * @param ToTime
+     * @param Interval Time Interval (seconds)
+     * @return TotalPedCallAndAvgWaitingTimeByInterval totalPedCallAndAvgWaitingTimeByInterval
+     */
     public static TotalPedCallAndAvgWaitingTimeByInterval getTotalPedCallAndAvgWaitingTimeByInterval(
             List<WaitingTimeForPedestrianCall> waitingTimeForPedestrianCallList, double FromTime,double ToTime, double Interval){
         // This function is used to get total pedestrian calls and average waiting time by interval
@@ -1315,6 +1536,13 @@ public class calculateTrafficSignalParameters {
     //******************************Drawing Functions ********************************
     //********************************************************************************
     // Split Monitor
+    /**
+     *
+     * @param phasePropertyByIDList List of PhasePropertyByID
+     * @param planPropertyList List of PlanProperty
+     * @param Date
+     * @param IntName Intersection Name
+     */
     public static void drawSplitMonitor(List<PhasePropertyByID> phasePropertyByIDList,List<PlanProperty> planPropertyList, int Date,
                                         String IntName){
         // This function is used to draw split monitor
@@ -1389,6 +1617,14 @@ public class calculateTrafficSignalParameters {
     }
 
     // Purdue Phase Termination
+    /**
+     *
+     * @param phasePropertyByIDList List of PhasePropertyByID
+     * @param planPropertyList List of PlanProperty
+     * @param MaxNumPhase Maximum number of phases
+     * @param Date
+     * @param IntName Intersection Name
+     */
     public static void drawPurduePhaseTermination(List<PhasePropertyByID> phasePropertyByIDList,List<PlanProperty> planPropertyList,
                                                   int MaxNumPhase,int Date,String IntName){
         // This function is used to draw purdue phase termination
@@ -1519,6 +1755,17 @@ public class calculateTrafficSignalParameters {
     }
 
     // Purdue coordination diagram
+    /**
+     *
+     * @param detectorByApproach DetectorByApproach
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @param Title Plot title
+     * @param Interval Time interval (seconds)
+     */
     public static void drawPurdueCoordinationDiagramByApproach(DetectorByApproach detectorByApproach,int Date, double FromTime, double ToTime,String IntIPStr
             , Connection con, String Title, double Interval){
         // This function is used to draw the purdue coordination diagram
@@ -1566,6 +1813,12 @@ public class calculateTrafficSignalParameters {
         drawPurduePhaseCoordinationDiagram(Title,detectorOnTimes, changeToGreenYellowRedTimeSeries);
     }
 
+    /**
+     *
+     * @param Title
+     * @param detectorOnTimes List of double[]
+     * @param changeToGreenYellowRedTimeSeries ChangeToGreenYellowRedTimeSeries
+     */
     public static void drawPurduePhaseCoordinationDiagram(String Title, List<double[]> detectorOnTimes,ChangeToGreenYellowRedTimeSeries changeToGreenYellowRedTimeSeries){
         // This function is used to draw the purdue phase coordination diagram
 
@@ -1634,6 +1887,19 @@ public class calculateTrafficSignalParameters {
     }
 
     // Yellow and Red Actuations
+    /**
+     *
+     * @param DetectorList List of Detectors
+     * @param PhaseID Phase ID
+     * @param Movement Traffic movement
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @param Title Plot title
+     * @param Interval Time interval (seconds)
+     */
     public static void drawYellowAndRedActuations(List<Integer> DetectorList,int PhaseID, String Movement, int Date
             , double FromTime, double ToTime,String IntIPStr, Connection con, String Title, double Interval){
         // This function is used to draw yellow and all red actuation events
@@ -1709,6 +1975,19 @@ public class calculateTrafficSignalParameters {
 
 
     // Purdue Split Failure
+    /**
+     *
+     * @param DetectorList List of detectors
+     * @param PhaseID Phase ID
+     * @param Movement Traffic movement
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @param Title Plot title
+     * @param Interval Time interval (seconds)
+     */
     public static void drawPurdueSplitFailure(List<Integer> DetectorList,int PhaseID, String Movement, int Date
             , double FromTime, double ToTime,String IntIPStr, Connection con, String Title, double Interval){
         // This function is used to draw Purdue Split Failure
@@ -1870,6 +2149,17 @@ public class calculateTrafficSignalParameters {
     }
 
     // Arrival on red
+    /**
+     *
+     * @param detectorByApproach DetectorByApproach
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @param Title Plot title
+     * @param Interval Time interval (seconds)
+     */
     public static void drawArrivalOnRedByApproachAndPhase(DetectorByApproach detectorByApproach,int Date, double FromTime, double ToTime,String IntIPStr
             , Connection con, String Title, double Interval){
         // This function is used to draw arrivals on red with given approach and phase
@@ -1898,6 +2188,11 @@ public class calculateTrafficSignalParameters {
         drawArrivalOnRedWithDataInput(arrivalOnRedFlow,Title);
     }
 
+    /**
+     *
+     * @param arrivalOnRedFlow double[][] Arrival On red & total flow
+     * @param Title Plot Title
+     */
     public static void drawArrivalOnRedWithDataInput(double [][] arrivalOnRedFlow, String Title){
         // This function is draw arrivals on red with data inputs
 
@@ -1924,6 +2219,12 @@ public class calculateTrafficSignalParameters {
     }
 
     // Detector events & Approach flow and occupancy
+    /**
+     *
+     * @param TimeFlowOcc double [][] Time&Flow&Occ
+     * @param Case Different plot cases
+     * @param Title Plot title
+     */
     public static void drawFlowOccTimeByApproach(double [][] TimeFlowOcc, String Case, String Title){
         // This function is used to draw flow/Occ-time plots by approach
 
@@ -1957,6 +2258,13 @@ public class calculateTrafficSignalParameters {
         }
     }
 
+    /**
+     *
+     * @param detectorConfigList List of DetectorConfig
+     * @param Interval Time interval (seconds)
+     * @param Title Plot Title
+     * @param actuationEventByDetectorList List of ActuationEventByDetector
+     */
     public static void drawApproachFlowAndOccupancy(List<DetectorConfig> detectorConfigList, double Interval, String Title
             ,List<ActuationEventByDetector> actuationEventByDetectorList){
         // This function is used to draw approach flow and occupancy
@@ -1996,6 +2304,14 @@ public class calculateTrafficSignalParameters {
         }
     }
 
+    /**
+     *
+     * @param detectorConfigList List of DetectorConfig
+     * @param Interval Time interval (seconds)
+     * @param Title Plot title
+     * @param actuationEventByDetectorList List of ActuationEventByDetector
+     * @param Movement Traffic movement
+     */
     public static void drawTurningMovementCountByApproach(List<DetectorConfig> detectorConfigList, double Interval, String Title
             ,List<ActuationEventByDetector> actuationEventByDetectorList, String Movement){
         // This function is used to draw turning movement counts by approach: only for left-turn and right-turn movements
@@ -2037,6 +2353,17 @@ public class calculateTrafficSignalParameters {
     }
 
     // Pedestrian details
+    /**
+     *
+     * @param PhaseID Phase ID
+     * @param Date
+     * @param FromTime
+     * @param ToTime
+     * @param IntIPStr Intersection IP String
+     * @param con Database connection
+     * @param Title Plot title
+     * @param Interval Time interval (seconds)
+     */
     public static void drawPedestrianCountsAndDelayByPhase(int PhaseID,int Date, double FromTime, double ToTime,String IntIPStr
             , Connection con, String Title, double Interval){
         // This function is used to draw pedestrian counts and delay by phases
@@ -2058,6 +2385,16 @@ public class calculateTrafficSignalParameters {
 
     }
 
+    /**
+     *
+     * @param StartTime
+     * @param YData
+     * @param Key
+     * @param Title
+     * @param XLabel
+     * @param YLabel
+     * @param ApplicationTitle
+     */
     public static void drawPedestrianEventsHistogram(double[] StartTime,double[] YData, String Key,String Title
             , String XLabel, String YLabel, String ApplicationTitle){
 

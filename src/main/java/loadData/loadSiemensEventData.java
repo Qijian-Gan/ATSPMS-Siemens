@@ -18,11 +18,31 @@ public class loadSiemensEventData {
             this.EventID=_EventID;
             this.EventValue=_EventValue;
         }
-        public int EventDate;
-        public double EventTime;
-        public String EventTimeStr;
-        public int EventID;
-        public int EventValue;
+        protected int EventDate;
+        protected double EventTime;
+        protected String EventTimeStr;
+        protected int EventID;
+        protected int EventValue;
+
+        public int getEventDate(){
+            return EventDate;
+        }
+
+        public double getEventTime(){
+            return EventTime;
+        }
+
+        public String getEventTimeStr(){
+         return EventTimeStr;
+        }
+
+        public int getEventID(){
+            return EventID;
+        }
+
+        public int getEventValue(){
+            return EventValue;
+        }
     }
 
     public static class EventDataByIntersection{
@@ -31,10 +51,24 @@ public class loadSiemensEventData {
             this.IntersectionIP=_IntersectionIP;
             this.eventDataList=_eventDataList;
         }
-        public String IntersectionIP;
-        public List<EventData> eventDataList;
+        protected String IntersectionIP;
+        protected List<EventData> eventDataList;
+
+        public String getIntersectionIP(){
+            return IntersectionIP;
+        }
+
+        public List<EventData> getEventDataList(){
+            return eventDataList;
+        }
     }
 
+    /**
+     *
+     * @param connection Database connection
+     * @param InputFileLocation Input folder location
+     * @param OutputFileLocation Output folder location (remove files to)
+     */
     public static void mainSiemensRead(Connection connection,String InputFileLocation, String OutputFileLocation){
         // This the main function to read Siemens Data
 
@@ -63,6 +97,11 @@ public class loadSiemensEventData {
         }
     }
 
+    /**
+     *
+     * @param fileName File name
+     * @return EventDataByIntersection (class)
+     */
     public static EventDataByIntersection readSiemensEventData(String fileName){
         // This function is used to read the Siemens Data
         // Each file contains the event data for only one intersection
@@ -125,6 +164,13 @@ public class loadSiemensEventData {
         }
     }
 
+    /**
+     *
+     * @param fromFolder Current folder
+     * @param toFolder Target folder
+     * @param fileName file to be removed
+     * @return true/false
+     */
     public static boolean moveFileFromAToB(String fromFolder, String toFolder, String fileName){
         // This function is used to move file from fromFolder to toFolder
 
